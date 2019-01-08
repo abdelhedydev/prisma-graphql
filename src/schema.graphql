@@ -1,8 +1,9 @@
 type Query {
-  me: User!
-  Post: Post!
-  posts(query:String): [Post!]!
+  user(id: ID!): User!
   users: [User!]!
+  post(id: ID!): Post!
+  posts: [Post!]!
+  comment(id: ID!): Comment!
   comments:[Comment!]!
 }
 type Mutation{
@@ -58,7 +59,6 @@ type User{
   id: ID!
   name: String!
   email: String!
-  age: Int
   posts:[Post!]!
   comments:[Comment!]
 }
