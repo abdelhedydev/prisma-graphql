@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js --ext js,graphql --exec babel-node"
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "get-schema":"graphql get-schema -p prisma"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "graphql-cli": "^3.0.4",
     "graphql-yoga": "^1.14.10",
+    "prisma-binding": "^2.2.14",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
