@@ -20,3 +20,15 @@ prisma deploy
 npm run get-schema
 ```
 
+### generate token
+
+```
+prisma token
+```
+
+### DB reset
+
+```
+prisma delete
+```
+
