@@ -1,19 +1,12 @@
 const Subscription = {
-  count: {
-    subscribe: (parent, args, { pubsub }) => {
-      let count = 0
-      setInterval(() => {
-        count++
-        pubsub.publish('Counter', { count })
-      }, 1000)
-      return pubsub.asyncIterator('Counter')
-    }
-  },
   comment: {
-    subscribe: (parent, args, { pubsub }, info) => pubsub.asyncIterator('Comment')
+    subscribe: (parent, args, { prisma }, info) => prisma.subscription.comment(null, info)
   },
   post: {
-    subscribe: (parent, ags, { pubsub }, info) => pubsub.asyncIterator('Post')
+    subscribe: (parent, ags, { prisma }, info) => prisma.subscription.post(null, info)
+  },
+  user: {
+    subscribe: (parent, args, { prisma }, info) => prisma.subscription.user(null, info)
   }
 }
 export { Subscription as default }

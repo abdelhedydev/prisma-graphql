@@ -20,9 +20,9 @@ type Mutation{
   deleteComment(id: ID!): Comment!
 }
 type Subscription {
-  count: Int!
   comment: ComentSubscriptionPayload!
   post: PostSubscriptionPayload!
+  user: UserSubscriptionPayload!
 }
 
 
@@ -79,15 +79,18 @@ type Comment{
 
 
 type PostSubscriptionPayload {
-  mutation: MutationType
-  data: Post!
+  mutation: MutationType!
+  node: Post
 }
 
 type ComentSubscriptionPayload {
-  mutation: MutationType
-  data: Comment!
+  mutation: MutationType!
+  node: Comment
 }
-
+type UserSubscriptionPayload{
+  mutation: MutationType!
+  node: User
+}
 
 
 enum MutationType {
