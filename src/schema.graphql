@@ -7,7 +7,9 @@ type Query {
   comments:[Comment!]!
 }
 type Mutation{
-  createUser(data: createUserInput): User!
+  login(email: String!,password: String!): Authpayload!
+
+  createUser(data: createUserInput): Authpayload!
   updateUser(id: ID!, data: updateUserInput!): User!
   deleteUser(id: ID!): User!
 
@@ -31,6 +33,7 @@ type Subscription {
 input createUserInput {
   name:String!
   email: String!
+  password: String!
 }
 input updateUserInput {
   name:String
@@ -98,4 +101,9 @@ enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+type Authpayload {
+  user: User!
+  token: String!
 }
