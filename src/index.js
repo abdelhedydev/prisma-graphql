@@ -14,9 +14,12 @@ const server = new GraphQLServer({
   resolvers: {
     Query, Mutation, Subscription, User, Post, Comment
   },
-  context: {
-    pubsub,
-    prisma
+  context (request) {
+    return {
+      pubsub,
+      prisma,
+      request
+    }
   }
 })
 server.start(({ port }) => {

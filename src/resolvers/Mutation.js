@@ -1,6 +1,8 @@
 import bscrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { size } from 'lodash'
+import getUserId from '../utilis/getUserId'
+
 const Mutattion = {
   login: async (parent, { email, password }, { prisma }, info) => {
     const userExist = await prisma.exists.User({ email })
@@ -27,12 +29,14 @@ const Mutattion = {
   },
   updateUser: (parent, { id, data }, { prisma }, info) => prisma.mutation.updateUser({ data, where: { id } }, info),
   deleteUser: (parent, { id }, { prisma }, info) => prisma.mutation.deleteUser({ where: { id } }, info),
-  createPost: async (parent, { data }, { prisma }, info) => {
+  createPost: async (parent, { data }, { prisma, request }, info) => {
+    const userId = getUserId(request)
+
     const post = await prisma.mutation.createPost({
       data: {
         ...data,
         author: {
-          connect: { id: data.author }
+          connect: { id: userId }
         }
       }
     }, info)
