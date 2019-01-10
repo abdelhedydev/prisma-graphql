@@ -27,8 +27,11 @@ const Mutattion = {
     const token = jwt.sign({ userId: user.id }, 'secret')
     return { user, token }
   },
-  updateUser: (parent, { id, data }, { prisma }, info) => prisma.mutation.updateUser({ data, where: { id } }, info),
-  deleteUser: (parent, { id }, { prisma }, info) => prisma.mutation.deleteUser({ where: { id } }, info),
+  updateUser: (parent, { id, data }, { prisma, request }, info) => {
+    const userId = getUserId(request)
+    return prisma.mutation.updateUser({ data, where: { id: userId } }, info)
+  },
+  deleteUser: (parent, args, { prisma, request }, info) => prisma.mutation.deleteUser({ where: { id: getUserId(request) } }, info),
   createPost: async (parent, { data }, { prisma, request }, info) => {
     const userId = getUserId(request)
 

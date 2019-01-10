@@ -10,8 +10,8 @@ type Mutation{
   login(email: String!,password: String!): Authpayload!
 
   createUser(data: createUserInput): Authpayload!
-  updateUser(id: ID!, data: updateUserInput!): User!
-  deleteUser(id: ID!): User!
+  updateUser(data: updateUserInput!): User!
+  deleteUser: User!
 
   createPost(data: createPostInput): Post!
   updatePost(id: ID!,data: updatePostInput ): Post!
