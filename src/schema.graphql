@@ -1,5 +1,5 @@
 type Query {
-  user(id: ID!): User!
+  user: User!
   users: [User!]!
   post(id: ID!): Post!
   posts: [Post!]!

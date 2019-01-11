@@ -2,4 +2,5 @@ node_modules
 
 prisma/docker-compose.yml
 prisma/prisma.yml
+
 package-lock.json
