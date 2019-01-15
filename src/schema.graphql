@@ -1,9 +1,9 @@
 type Query {
   user: User!
-  users: [User!]!
+  users(first: Int,skip: Int): [User!]!
 
   post(id: ID!): Post!
-  posts: [Post!]!
+  posts(first: Int,skip: Int): [Post!]!
 
   comment(id: ID!): Comment!
   comments:[Comment!]!
