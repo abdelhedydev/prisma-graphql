@@ -1,34 +1,36 @@
-import bscrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import { size } from 'lodash'
+import bcrypt from 'bcryptjs'
+import hashPassword from '../utilis/hashPassword'
 import getUserId from '../utilis/getUserId'
+import generateToken from '../utilis/generateToken'
 
 const Mutattion = {
   login: async (parent, { email, password }, { prisma }, info) => {
     const userExist = await prisma.exists.User({ email })
     if (!userExist) throw new Error('User does not exist')
     const user = await prisma.query.user({ where: { email } })
-    const passMatch = await bscrypt.compare(password, user.password)
+    const passMatch = await bcrypt.compare(password, user.password)
     if (!passMatch) throw new Error('Password does not match')
-    const token = jwt.sign({ userId: user.id }, 'secret')
+    const token = generateToken(user.id)
     return {
       user, token
     }
   },
   createUser: async (parent, { data }, { prisma }, info) => {
-    if (size(data.password) < 8) throw new Error('Password Must be contain more than 8 charactersF')
-    const password = await bscrypt.hash(data.password, 10)
+    const password = await hashPassword(data.password)
     const user = await prisma.mutation.createUser({
       data: {
         ...data,
         password
       }
     })
-    const token = jwt.sign({ userId: user.id }, 'secret')
+    const token = generateToken(user.id)
     return { user, token }
   },
-  updateUser: (parent, { id, data }, { prisma, request }, info) => {
+  updateUser: async (parent, { id, data }, { prisma, request }, info) => {
     const userId = getUserId(request)
+    if (data.password) {
+      data.password = await hashPassword(data.password)
+    }
     return prisma.mutation.updateUser({ data, where: { id: userId } }, info)
   },
   deleteUser: (parent, args, { prisma, request }, info) => prisma.mutation.deleteUser({ where: { id: getUserId(request) } }, info),

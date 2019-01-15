@@ -11,6 +11,19 @@ const User = {
         return null
       }
     }
+  },
+  posts: {
+    fragment: 'fragment userId on User { id }',
+    resolve (parent, args, { prisma, request }, info) {
+      return prisma.query.posts({
+        where: {
+          published: true,
+          author: {
+            id: parent.id
+          }
+        }
+      }, info)
+    }
   }
 }
 export { User as default }
