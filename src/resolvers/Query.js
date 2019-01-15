@@ -5,7 +5,7 @@ const Query = {
     const userId = getUserId(request)
     return prisma.query.user({ where: { id: userId } }, info)
   },
-  users: (parent, { first, skip }, { prisma }, info) => prisma.query.users({ first, skip }, info),
+  users: (parent, { first, skip, orderBy }, { prisma }, info) => prisma.query.users({ first, skip, orderBy }, info),
   post: async (parent, { id }, { prisma, request }, info) => {
     const userId = getUserId(request, false)
     const posts = await prisma.query.posts({
@@ -24,18 +24,19 @@ const Query = {
     }, info)
     return get(posts, '0', [])
   },
-  posts: (parent, { first, skip }, { prisma }, info) => {
+  posts: (parent, { first, skip, orderBy }, { prisma }, info) => {
     const opArgs = {
       where: {
         published: true
       },
       first,
-      skip
+      skip,
+      orderBy
     }
     return prisma.query.posts(opArgs, info)
   },
   comment: (parent, { id }, { prisma }, info) => prisma.query.comment({ where: { id } }, info),
-  comments: (parent, args, { prisma }, info) => prisma.query.comments(null, info),
+  comments: (parent, { orderBy }, { prisma }, info) => prisma.query.comments({ orderBy }, info),
   myPosts: (parent, args, { prisma, request }, info) => {
     const userId = getUserId(request)
     return prisma.query.posts({ where: { author: { id: userId } } }, null)

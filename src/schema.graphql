@@ -1,12 +1,13 @@
+# import UserOrderByInput,PostOrderByInput,CommentOrderByInput from './generated/prisma.graphql'
 type Query {
   user: User!
-  users(first: Int,skip: Int): [User!]!
+  users(first: Int,skip: Int,orderBy: UserOrderByInput): [User!]!
 
   post(id: ID!): Post!
-  posts(first: Int,skip: Int): [Post!]!
+  posts(first: Int,skip: Int,orderBy: PostOrderByInput): [Post!]!
 
   comment(id: ID!): Comment!
-  comments:[Comment!]!
+  comments(orderBy:CommentOrderByInput):[Comment!]!
 
   myPosts: [Post!]!
 }
@@ -68,6 +69,8 @@ type User{
   password: String!
   posts:[Post!]!
   comments:[Comment!]
+  createdAt: String!
+  updatedAt: String!
 }
 type Post{
   id: ID!
@@ -76,12 +79,16 @@ type Post{
   published: Boolean
   author: User!
   comments: [Comment!]
+  createdAt: String!
+  updatedAt: String!
 }
 type Comment{
   id: ID!
   text: String!
   author: User!
   post: Post!
+  createdAt: String!
+  updatedAt: String!
 }
 
 
