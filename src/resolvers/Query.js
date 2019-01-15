@@ -24,8 +24,19 @@ const Query = {
     }, info)
     return get(posts, '0', [])
   },
-  posts: (parent, args, { prisma }, info) => prisma.query.posts(null, info),
+  posts: (parent, args, { prisma }, info) => {
+    const opArgs = {
+      where: {
+        published: true
+      }
+    }
+    return prisma.query.posts(opArgs, info)
+  },
   comment: (parent, { id }, { prisma }, info) => prisma.query.comment({ where: { id } }, info),
-  comments: (parent, args, { prisma }, info) => prisma.query.comments(null, info)
+  comments: (parent, args, { prisma }, info) => prisma.query.comments(null, info),
+  myPosts: (parent, args, { prisma, request }, info) => {
+    const userId = getUserId(request)
+    return prisma.query.posts({ where: { author: { id: userId } } }, null)
+  }
 }
 export { Query as default }

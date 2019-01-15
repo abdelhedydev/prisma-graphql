@@ -7,7 +7,7 @@ const getUserId = (request, requireAuth = true) => {
     const decoded = jwt.verify(token, 'secret')
     return decoded.userId
   }
-  if (!header && requireAuth) {
+  if (requireAuth) {
     throw new Error('Authenthication required')
   }
   return null

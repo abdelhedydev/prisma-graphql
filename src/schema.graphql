@@ -1,10 +1,14 @@
 type Query {
   user: User!
   users: [User!]!
+
   post(id: ID!): Post!
   posts: [Post!]!
+
   comment(id: ID!): Comment!
   comments:[Comment!]!
+
+  myPosts: [Post!]!
 }
 type Mutation{
   login(email: String!,password: String!): Authpayload!
@@ -59,7 +63,7 @@ input updateCommentInput{
 type User{
   id: ID!
   name: String!
-  email: String!
+  email: String
   password: String!
   posts:[Post!]!
   comments:[Comment!]
