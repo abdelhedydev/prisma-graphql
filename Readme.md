@@ -8,12 +8,16 @@ Blog App
 ```
 npm install
 ```
-### Deploying
+### Deploying (Dev)
 
 ```
-prisma deploy
+prisma deploy -e ../config/dev.env
 ```
+### Deploying (Prod)
 
+```
+prisma deploy -e ../config/prod.env
+```
 ### Schema Generating
 
 ```

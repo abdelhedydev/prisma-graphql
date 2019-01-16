@@ -1,15 +1,19 @@
 {
-  "name": "graphql-cardio",
+  "name": "prisma-graphql",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "start": "env-cmd ./config/prod.env node dist/index.js",
+    "heroku-postbuild": "babel src --out-dir dist --copy-files",
+    "dev": "env-cmd ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "get-schema": "graphql get-schema -p prisma"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
+    "env-cmd": "^8.0.2",
     "graphql-cli": "^3.0.4",
     "graphql-yoga": "^1.14.10",
     "jsonwebtoken": "^8.4.0",

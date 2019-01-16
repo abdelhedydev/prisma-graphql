@@ -4,3 +4,7 @@ prisma/docker-compose.yml
 prisma/prisma.yml
 
 package-lock.json
+
+config
+
+dist
